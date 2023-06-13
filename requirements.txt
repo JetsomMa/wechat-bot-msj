@@ -1,0 +1,6 @@
+pyqrcode
+Flask
+flask-cors
+requests
+pypng
+pymysql
