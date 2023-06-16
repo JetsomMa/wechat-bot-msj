@@ -36,7 +36,7 @@ httpQueue = queue.Queue()
 
 # http服务子线程的回调函数
 def httpCallback(url,  username, chatusername):
-    fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + url.replace('https://chat.mashaojie.cn/download/images/dalle/', '')
+    fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + url.replace('https://download.mashaojie.cn/images/dalle/', '')
     print("开始发送照片: " + url)
     if chatusername:
         itchat.send("开始发送照片: " + url, toUserName=chatusername)
@@ -178,7 +178,7 @@ def text_reply(msg):
             if result.text == 'error':
                 msg.user.send(f"[{content}]的画作结果：画画失败")
             else:
-                # fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + result.text.replace('https://chat.mashaojie.cn/download/images/dalle/', '')
+                # fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + result.text.replace('https://download.mashaojie.cn/images/dalle/', '')
                 msg.user.send(f"[{content}]的画作完成！")
                 # time.sleep(random.randint(1, 3))  # 随机休眠（1~3）秒，用于防检测机器人
                 # msg.user.send_image(fileDir = fileUrl)
@@ -222,7 +222,7 @@ def text_reply(msg):
             if result.text == 'error':
                 msg.user.send(f"[{content}]的画作结果：画画失败")
             else:
-                # fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + result.text.replace('https://chat.mashaojie.cn/download/images/dalle/', '')
+                # fileUrl = '/home/jetsom/nginx/html/download/images/dalle/' + result.text.replace('https://download.mashaojie.cn/images/dalle/', '')
                 msg.user.send(f"[{content}]的画作完成！")
                 # time.sleep(random.randint(1, 3))  # 随机休眠（1~3）秒，用于防检测机器人
                 # msg.user.send_image(fileDir = fileUrl)
