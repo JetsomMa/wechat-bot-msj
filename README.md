@@ -2,15 +2,15 @@
 `pip install -r requirements.txt`
 
 
-### 马少杰微信机器人[wechat-msj.py] 
+### 马少杰微信机器人[msj.py] 
 
-`python wechat-msj.py`
+`python msj.py`
 **后台持久化运行**
 `nohup python server.py > server.out 2>&1 & tail -f server.out`
 
-`nohup python wechat-msj.py > wechat-msj.out 2>&1 & tail -f wechat-msj.out`
+`nohup python msj.py > msj.out 2>&1 & tail -f msj.out`
 
-`nohup python wechat-jiancai.py > wechat-jiancai.out 2>&1 & tail -f wechat-jiancai.out`
+`nohup python jiancai.py > jiancai.out 2>&1 & tail -f jiancai.out`
 
 
 # blacklist

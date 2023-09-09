@@ -27,22 +27,28 @@ def restartWechatJiancai():
                 "message": "你不是管理员，无法执行该操作"
             },
         }
-
-    if command == 'restart wechat-jiancai':
-        if os.path.exists('wechat-jiancai.pid'):
+    
+    if command.startswith("restart"):
+        wechatName = command.replace("restart", "").strip()
+        if wechatName not in ['jiancai', 'jiancai2', 'msj']:
+            return {
+                "code": 200,
+                "data": {
+                    "message": "你输入的微信服务有误"
+                },
+            }
+        if os.path.exists(f'{wechatName}.pid'):
             # 打开文件并读取内容
-            with open('wechat-jiancai.pid', 'r') as f:
+            with open(f'{wechatName}.pid', 'r') as f:
                 pid_str = f.read()
             
             command2 = 'kill -9 ' + pid_str
-            # subprocess.run(command2.split(' '))
             os.system(command2)
           
-        command3 = 'nohup python wechat-jiancai.py > wechat-jiancai.out 2>&1 &'
-        # subprocess.run(command3.split(' '))
+        command3 = f'nohup python {wechatName}.py > {wechatName}.out 2>&1 &'
         os.system(command3)
 
-        time.sleep(2)
+        time.sleep(3)
         # 打开照片文件并读取其内容
         with open('QR.png', 'rb') as f:
             photo_data = f.read()
@@ -50,7 +56,7 @@ def restartWechatJiancai():
         # 将照片数据转换为Base64编码
         photo_base64 = base64.b64encode(photo_data)
 
-        message = f'重启 wechat-jiancai 成功\n<img src="data:image/jpeg;base64,{photo_base64.decode()}" alt="Photo">'
+        message = f'重启 {wechatName} 成功\n<img src="data:image/jpeg;base64,{photo_base64.decode()}" alt="Photo">'
 
         return {
             "code": 200,
@@ -58,37 +64,7 @@ def restartWechatJiancai():
                 "message": message
             },
         }
-    elif command == 'restart wechat-msj':
-        if os.path.exists('wechat-msj.pid'):
-            # 打开文件并读取内容
-            with open('wechat-msj.pid', 'r') as f:
-                pid_str = f.read()
-            
-            command2 = 'kill -9 ' + pid_str
-            # subprocess.run(command2.split(' '))
-            os.system(command2)
-          
-        command3 = 'nohup python wechat-msj.py > wechat-msj.out 2>&1 &'
-        # subprocess.run(command3.split(' '))
-        os.system(command3)
-
-        time.sleep(2)
-        # 打开照片文件并读取其内容
-        with open('QR.png', 'rb') as f:
-            photo_data = f.read()
-
-        # 将照片数据转换为Base64编码
-        photo_base64 = base64.b64encode(photo_data)
-
-        message = f'重启 wechat-msj 成功\n<img src="data:image/jpeg;base64,{photo_base64.decode()}" alt="Photo">'
-
-        return {
-            "code": 200,
-            "data": {
-                "message": message
-            },
-        }
-
+    
     else:
         output = subprocess.check_output(command.split(' '))
         print(output.decode())

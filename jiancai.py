@@ -7,13 +7,15 @@ import queue
 from database import getJiancaiConfig
 import os
 
+messageObject = {}
+
 # 获取当前进程的ID
 pid = os.getpid()
 # 将进程ID转换为字符串
 pid_str = str(pid)
 
 # 打开文件并写入进程ID
-with open('wechat-jiancai.pid', 'w') as f:
+with open('jiancai.pid', 'w') as f:
     f.write(pid_str)
 
 jiancaiConfigs = getJiancaiConfig()
@@ -34,6 +36,12 @@ targetContact = None
 ######################## heart 服务子线程 ########################
 # 创建一个队列对象
 heartQueue = queue.Queue()
+
+def clearMessageObject():
+    current_timestamp = time.time()
+    for key in list(messageObject.keys()):
+        if current_timestamp - messageObject[key] >= 60 * 60:
+            del messageObject[key]
 
 # http服务子线程的回调函数
 def heartCallback():
@@ -93,8 +101,12 @@ def text_reply(msg):
         roomName = msg.user.NickName
         messageTime = datetimeFormat(msg.CreateTime)
         message = f"群名称：{roomName}\n发消息人：{ finalName }\n消息时间：{ messageTime }\n消息内容：{ content }"
-        targetContact.send(message)
-
+        
+        if f'{finalName}_{content}' not in messageObject:
+            targetContact.send(message)
+            
+        messageObject[f'{finalName}_{content}'] = msg.CreateTime
+            
 
 def initTarget():
     global targetContact, targetContactName

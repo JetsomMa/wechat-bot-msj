@@ -11,24 +11,26 @@ import queue
 import random
 import os
 
+targetRoomName = 'ChatGPT使用交流群'
+botName = '@chat'
+reply_prefix = '【chat】'
+dingUserName = '喂喂喂阿宁'
+
+targetRoom = None
+dingUser = None
+
 # 获取当前进程的ID
 pid = os.getpid()
 # 将进程ID转换为字符串
 pid_str = str(pid)
 
 # 打开文件并写入进程ID
-with open('wechat-msj.pid', 'w') as f:
+with open('msj.pid', 'w') as f:
     f.write(pid_str)
 
 chatUrl = 'https://api.mashaojie.cn/api/chat-query'
 # chatUrl = 'http://127.0.0.1:3002/api/chat-query'
 port = 3012
-targetRoom = None
-targetRoomName = 'ChatGPT使用交流群'
-botName = '@chat'
-reply_prefix = '【chat】'
-dingUser = None
-dingUserName = 'A0000专业防水丁师'
 
 ######################## http 服务子线程 ########################
 # 创建一个队列对象
