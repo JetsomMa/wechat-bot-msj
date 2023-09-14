@@ -30,7 +30,7 @@ def startWechat(wechatName):
     # 将照片数据转换为Base64编码
     photo_base64 = base64.b64encode(photo_data)
 
-    message = f'重启 {wechatName} 成功\n<img src="data:image/jpeg;base64,{photo_base64.decode()}" alt="Photo">'
+    message = f'重启 {wechatName} 成功\n<img style="width: 90%; max-width: 400px; margin: 10px 5%;" src="data:image/jpeg;base64,{photo_base64.decode()}" alt="Photo">'
     return message
 
 
