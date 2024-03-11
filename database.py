@@ -2,7 +2,7 @@ import pymysql
 
 def getConnection():
     # 创建数据库连接
-    connection = pymysql.connect( host='118.195.236.91', user='dataset', password='dataset2023', db='dataset' )
+    connection = pymysql.connect( host='118.195.236.91', user='dataset', password='XXXXX', db='dataset' )
 
     # 创建一个游标对象
     cursor = connection.cursor()
